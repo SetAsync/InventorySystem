@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2 class="my-4">Profile Information</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Name: {{user.name}}</h4>
+            <h4>Email: {{user.email}}</h4>
+            <h4>Role: {{user.role}}</h4>
+            <h4>ID: {{user.id}}</h4>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-6">
+            <form action="{{ url_for('account_api.delete_account') }}" method="post" onsubmit="return confirm('Are you sure you want to delete your account?');">
+                <button type="submit" class="btn btn-danger">Delete Account</button>
+            </form>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <a href="{{ url_for('account_api.logout') }}" class="btn btn-primary">Logout</a>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <a href="{{ url_for('inventory.view_user', user_id=user.id) }}" class="btn btn-primary">Claimed Items</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

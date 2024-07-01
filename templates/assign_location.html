@@ -1,0 +1,41 @@
+<!-- assign_location.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3 class="card-title">Current Item</h3>
+                </div>
+                <div class="card-body">
+                    <h5>Item Name: {{ item.name }}</h5>
+                    <p>Item ID: {{ item.id }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3 class="card-title">Select Location</h3>
+                </div>
+                <div class="card-body">
+                    <form action="{{ url_for('inventory.assign_location', item_id=item.id) }}" method="post">
+                        <div class="form-group">
+                            <label for="locationSelect">Choose a Location:</label>
+                            <select class="form-control" id="locationSelect" name="location_id">
+                                {% for location in locations %}
+                                <option value="{{ location.id }}">{{ location.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Assign Location</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

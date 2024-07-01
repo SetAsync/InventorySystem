@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+
+    <!-- Display users -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h3 class="card-title">Locations</h3>
+        </div>
+        <div class="card-body">
+            <div class="list-group">
+                <div class="list-group-item">
+                    <div class="d-flex w-100 justify-content-between">
+                        <div>
+                            <h5 class="mb-1">All Locations</h5>
+                            <p class="mb-1">View all items.</p>
+                        </div>
+                        <div class="btn-group" role="group">
+                            <form action="{{ url_for('inventory.view_items', location_id='all') }}" method="post"
+                                class="d-inline">
+                                <button type="submit" class="btn btn-success btn-sm">View Items</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                {% for location in locations %}
+                <div class="list-group-item">
+                    <div class="d-flex w-100 justify-content-between">
+                        <div>
+                            <h5 class="mb-1">{{ location.name }}</h5>
+                            <p class="mb-1">ID: {{ location.id }}</p>
+                        </div>
+                        <div class="btn-group" role="group">
+                            <form action="{{ url_for('inventory.view_items', location_id=location.id) }}" method="post"
+                                class="d-inline">
+                                <button type="submit" class="btn btn-success btn-sm">View Items</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% if not locations %}
+            <p class="text-muted mt-3">No locations found.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

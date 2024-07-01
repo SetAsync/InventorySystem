@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h1 class="my-4">Welcome to the Inventory System</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Features</h2>
+            <ul class="list-group">
+                <li class="list-group-item">Track inventory.</li>
+                <li class="list-group-item">Assign items to users.</li>
+                <li class="list-group-item">Assign items different places.</li>
+                <li class="list-group-item">Admin panel with logs.</li>
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <h2>Get Started</h2>
+            <p><a class="btn btn-primary btn-lg btn-block" href="/login" role="button">Sign Into Your Account</a></p>
+            <p><a class="btn btn-secondary btn-lg btn-block" href="/register" role="button">Create New Account</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

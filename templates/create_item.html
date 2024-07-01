@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="my-4 text-center">Create Item</h2>
+            <form method="POST" action="{{url_for('inventory.create_item')}}">
+                <div class="form-group">
+                    <label for="email">Item name</label>
+                    <input class="form-control" name="itemname" placeholder="Enter name" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Create</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

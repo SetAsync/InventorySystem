@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Admin Panel</h2>
+
+    <!-- Display users -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h3 class="card-title">List of Users</h3>
+        </div>
+        <div class="card-body">
+            <div class="list-group">
+                {% for user in users %}
+                <div class="list-group-item">
+                    <div class="d-flex w-100 justify-content-between">
+                        <div>
+                            <h5 class="mb-1">{{ user.name }}</h5>
+                            <p class="mb-1">{{ user.email }}</p>
+                            <small>User ID: {{ user.id }} | Role: {{ user.role }}</small>
+                        </div>
+                        <div class="btn-group" role="group">
+                            <!-- Delete User Form -->
+                            <form action="{{ url_for('admin.delete_user', user_id=user.id) }}" method="post"
+                                onsubmit="return confirm('Are you sure you want to delete this user?');"
+                                class="d-inline">
+                                <button type="submit" class="btn btn-danger btn-sm mr-2">Delete User</button>
+                            </form>
+                            <!-- Make Staff Form -->
+                            <form action="{{ url_for('admin.make_staff', user_id=user.id) }}" method="post"
+                                class="d-inline">
+                                <button type="submit" class="btn btn-warning btn-sm mr-2">Make Staff</button>
+                            </form>
+                            <!-- Make Admin Form -->
+                            <form action="{{ url_for('admin.make_admin', user_id=user.id) }}" method="post"
+                                class="d-inline">
+                                <button type="submit" class="btn btn-success btn-sm">Make Admin</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% if not users %}
+            <p class="text-muted mt-3">No users found.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Display users -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h3 class="card-title">List of Locations</h3>
+            <form action="{{url_for('inventory.create_location')}}" method="get" class="d-inline">
+                <button type="submit" class="btn btn-success btn-sm">Add Location</button>
+            </form>
+        </div>
+        <div class="card-body">
+            <div class="list-group">
+                {% for location in locations %}
+                <div class="list-group-item">
+                    <div class="d-flex w-100 justify-content-between">
+                        <div>
+                            <h5 class="mb-1">{{ location.name }}</h5>
+                            <p class="mb-1">ID: {{ location.id }}</p>
+                        </div>
+                
+                        <div class="btn-toolbar" role="toolbar" aria-label="Location Actions">
+                            <div class="btn-group mr-2" role="group">
+                                <form action="{{ url_for('inventory.view_items', location_id=location.id) }}" method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-success">View Items</button>
+                                </form>
+                            </div>
+                        
+                            <div class="btn-group" role="group">
+                                <form action="{{ url_for('admin.delete_location', location_id=location.id) }}" method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-danger">Delete Location</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                
+            </div>
+            {% if not locations %}
+            <p class="text-muted mt-3">No locations found.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <h3 class="card-title">List of Items</h3>
+            <form action="{{url_for('inventory.create_item')}}" method="get" class="d-inline">
+                <button type="submit" class="btn btn-success btn-sm">Create Item</button>
+            </form>
+        </div>
+        <div class="card-body">
+            {% for item in items %}
+            <div class="list-group-item">
+                <div class="d-flex w-100 justify-content-between">
+                    <div>
+                        <h5 class="mb-1">{{ item.name }}</h5>
+                        <p class="mb-1">ID: {{ item.id }}</p>
+                        {% if item.claimed %}
+                        <p class="mb-1">Claimed: {{ item.claimed }}</p>
+                        {% else %}
+                        <p class="mb-1">Unclaimed.</p>
+                        {% endif %}
+                    </div>
+            
+                    <div class="btn-toolbar" role="toolbar" aria-label="Location Actions">
+                        <div class="btn-group mr-2" role="group">
+                            {% if item.claimed %}
+                            <form action="{{ url_for('admin.remove_claim', item_id=item.id) }}" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-danger">Remove Claim</button>
+                            </form>
+                            {% endif %}
+
+                        </div>
+                    
+                        <div class="btn-group" role="group">
+                            <form action="{{ url_for('inventory.delete_item', item_id=item.id) }}" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-danger">Delete Item</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+       
+            {% if not items %}
+            <p class="text-muted mt-3">No items found.</p>
+            {% endif %}
+        </div>
+    </div>
+
+
+</div>
+{% endblock %}
